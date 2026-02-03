@@ -25,7 +25,7 @@ public class MapController : MonoBehaviour
     {
         // Debug.Log(pos);
         Vector2Int convertedPos = Configs.ConvertVectorToInt(pos);
-        // Debug.Log(convertedPos + "\n___");
+        // Debug.Log(convertedPos + "\n" + !obstacles.Contains(convertedPos) + "\n___");
 
         return !obstacles.Contains(convertedPos);
     }

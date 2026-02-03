@@ -14,7 +14,7 @@ public class ShowPosCanMove : MonoBehaviour
     {
         CanMoveEffectController.clicked = false;
         GameObject canMoveEffect = CanMoveEffectPooling.instance.TakeObj();
-        canMoveEffect.transform.position = pos;
+        canMoveEffect.transform.position = new Vector3(pos.x,pos.y,-2);
         canMoveEffects.Add(canMoveEffect);
     }
     public void ClearAllEffects()

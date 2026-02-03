@@ -15,9 +15,10 @@ public class CanMoveEffectController : MonoBehaviour
     }
     IEnumerator MovePlayerCoroutine()
     {
+        
         Player.instance.Anim.SetTrigger("Move");
         yield return new WaitForSeconds(0.25f);
-        Player.instance.gameObject.transform.position = transform.position;
+        Player.instance.gameObject.transform.position = new Vector3(transform.position.x,transform.position.y,0);
         Player.instance.Fall(0.25f);
         ShowPosCanMove.instance.ClearAllEffects();
         
