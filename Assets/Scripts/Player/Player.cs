@@ -53,16 +53,7 @@ public class Player : MonoBehaviour
             }
         }
         falling = false;
+        ChessPiece.clicked = false;
     }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("SwitchPiece"))
-        {
-            Destroy(transform.GetChild(0).gameObject);
-            GameObject piece = Instantiate(collision.gameObject.GetComponent<SwitchPiece>().PiecePrefab);
-            piece.transform.SetParent(transform, false);
-            piece.transform.localPosition = Vector3.zero;
-            Destroy(collision.gameObject);
-        }
-    }
+    
 }

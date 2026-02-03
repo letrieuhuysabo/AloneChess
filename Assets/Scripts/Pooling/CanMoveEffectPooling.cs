@@ -40,6 +40,8 @@ public class CanMoveEffectPooling : MonoBehaviour
     }
     public void ReturnObj(GameObject effect)
     {
+        Destroy(effect);
+        return;
         effect.SetActive(false);
         effect.transform.SetParent(transform,false);
         pool.Enqueue(effect);
