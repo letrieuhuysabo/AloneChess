@@ -1,13 +1,16 @@
 using TMPro;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class StarCollector : MonoBehaviour
 {
     int starCollected;
     public static StarCollector instance;
+    TextMeshProUGUI starText;
     void Start()
     {
         instance = this;
+        starText = GameObject.Find("Canvas").transform.Find("StarCollected").Find("Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
         starCollected = 0;
         UpdateStarCollected();
     }
@@ -18,6 +21,6 @@ public class StarCollector : MonoBehaviour
     }
     public void UpdateStarCollected()
     {
-        GameObject.Find("Canvas").transform.Find("StarCollected").Find("Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>().text = "x" + starCollected;
+        starText.text = "x" + starCollected;
     }
 }
