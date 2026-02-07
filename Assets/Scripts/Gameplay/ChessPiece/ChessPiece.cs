@@ -5,6 +5,11 @@ using UnityEngine;
 public abstract class ChessPiece : MonoBehaviour
 {
     public static bool clicked;
+    protected int posCanMoveQuantity;
+    Coroutine showCantMoveAnywhereCoroutine;
+    private void Start() {
+        posCanMoveQuantity = 0;
+    }
     void OnMouseDown()
     {
         if (Player.instance.Falling || CompleteGameController.completed)
@@ -19,6 +24,7 @@ public abstract class ChessPiece : MonoBehaviour
         else
         {
             clicked = true;
+            posCanMoveQuantity = 0;
             ShowPosesCanMove();
         }
         
@@ -31,6 +37,7 @@ public abstract class ChessPiece : MonoBehaviour
         if (MapController.instance.IsEmpty(targetPos))
         {
             ShowPosCanMove.instance.ShowThisPos(targetPos);
+            posCanMoveQuantity++;
             // Debug.Log("spawned at " + targetPos);
         }
     }
@@ -43,6 +50,7 @@ public abstract class ChessPiece : MonoBehaviour
             if (MapController.instance.IsEmpty(currentPos + dir * distance))
             {
                 ShowPosCanMove.instance.ShowThisPos(currentPos + dir * distance);
+                posCanMoveQuantity++;
                 // Debug.Log("spawned at " + currentPos + dir+distance);
             }
             else
@@ -64,11 +72,12 @@ public abstract class ChessPiece : MonoBehaviour
     {
         if (collision.CompareTag("SwitchPiece"))
         {
-            
-            GameObject piece = Instantiate(collision.gameObject.GetComponent<SwitchPiece>().PiecePrefab);
+            SwitchPiece switchPiece = collision.gameObject.GetComponent<SwitchPiece>();
+            GameObject piece = Instantiate(switchPiece.PiecePrefab);
             piece.transform.SetParent(transform.parent, false);
             piece.transform.localPosition = Vector3.zero;
             SoundGameplayController.instance.PlaySwitchPieceSound();
+            SpawnSwitchPieceVfx(switchPiece.SwitchVfxPrefab,collision.transform.position);
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
@@ -82,5 +91,33 @@ public abstract class ChessPiece : MonoBehaviour
             StarCollector.instance.CollectStar();
             StarCollector.instance.SpawnGainStarVfx(collision.gameObject.transform.position);
         }
+    }
+    void SpawnSwitchPieceVfx(GameObject switchVfxPrefab, Vector3 pos)
+    {
+        GameObject switchVfx = Instantiate(switchVfxPrefab);
+        switchVfx.transform.position = pos;
+        Destroy(switchVfx,5);
+    }
+    protected void ShowCantMoveAnywhere()
+    {
+        if (showCantMoveAnywhereCoroutine != null)
+        {
+            StopCoroutine(showCantMoveAnywhereCoroutine);
+        }
+        showCantMoveAnywhereCoroutine = StartCoroutine(ShowCantMoveAnywhereCoroutine());
+    }
+    IEnumerator ShowCantMoveAnywhereCoroutine()
+    {
+        SoundGameplayController.instance.PlayCantMoveSound();
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        float duration = 0.05f;
+        for (int i = 0; i < 2; i++)
+        {
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(duration);
+            spriteRenderer.color = Color.black;
+            yield return new WaitForSeconds(duration);
+        }
+        clicked = false;
     }
 }

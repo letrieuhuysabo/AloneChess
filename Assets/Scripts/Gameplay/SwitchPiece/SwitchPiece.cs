@@ -6,10 +6,5 @@ public class SwitchPiece : MonoBehaviour
     [SerializeField] GameObject switchVfxPrefab;
 
     public GameObject PiecePrefab { get => piecePrefab; set => piecePrefab = value; }
-    void OnDestroy()
-    {
-        GameObject switchVfx = Instantiate(switchVfxPrefab);
-        switchVfx.transform.position = transform.position;
-        Destroy(switchVfx,5);
-    }
+    public GameObject SwitchVfxPrefab { get => switchVfxPrefab; set => switchVfxPrefab = value; }
 }

@@ -14,5 +14,9 @@ public class BlackBishop : ChessPiece
         ShowPoses(currentPos, Vector3.right + Vector3.down);
         // đi trái xuống
         ShowPoses(currentPos, Vector3.left + Vector3.down);
+        if (posCanMoveQuantity == 0)
+        {
+            ShowCantMoveAnywhere();
+        }
     }
 }

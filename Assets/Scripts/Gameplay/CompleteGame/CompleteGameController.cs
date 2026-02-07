@@ -29,24 +29,23 @@ public class CompleteGameController : MonoBehaviour
 
         }
     }
-    public async void NextLevel()
+    public void NextLevel()
     {
-        LoadingCover.instance.Show();
-        await Task.Delay(500);
         int currentScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentScene+1);
+        SceneController.GoToScene(currentScene+1);
     }
-    public async void Back()
+    public void ReplayLevel()
     {
-        LoadingCover.instance.Show();
-        await Task.Delay(500);
-        SceneManager.LoadScene(1);
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneController.GoToScene(currentScene);
     }
-    public async void Exit()
+    public void Back()
     {
-        LoadingCover.instance.Show();
-        await Task.Delay(500);
-        SceneManager.LoadScene(0);
+        SceneController.GoToScene(1);
+    }
+    public void Exit()
+    {
+        SceneController.GoToScene(0);
     }
     public void PlayShowStar1Sound()
     {
