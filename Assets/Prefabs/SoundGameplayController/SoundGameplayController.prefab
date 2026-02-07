@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundGameplayController
   moveSound: {fileID: 8300000, guid: b82fc419628525d4a8f50c7f2bd2c668, type: 3}
   landingSound: {fileID: 8300000, guid: 7bef0064f8567430cac22499c6b93d4f, type: 3}
+  cantMoveSound: {fileID: 8300000, guid: 8b8d1f79c30888f4b8a2ae19b69fc78c, type: 3}
   gainStarSound: {fileID: 8300000, guid: 0c008ee3ee72a4362a35be25fa5de043, type: 3}
   reachPortalSound: {fileID: 0}
   switchPieceSound: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}

@@ -17,20 +17,13 @@ public class SelectLevelEvent : MonoBehaviour
             level.transform.SetParent(levelPrefab.transform.parent,false);
         }
     }
-    public async void ChooseLevel(TextMeshProUGUI text)
+    public void ChooseLevel(TextMeshProUGUI text)
     {
-        LoadingCover.instance.Show();
-        await Task.Delay(500);
-        GoToLevel(int.Parse(text.text));
+        int level = int.Parse(text.text);
+        SceneController.GoToScene(level+1);
     }
-    void GoToLevel(int level)
+    public void Exit()
     {
-        SceneManager.LoadScene(level + 1);
-    }
-    public async void Exit()
-    {
-        LoadingCover.instance.Show();
-        await Task.Delay(500);
-        SceneManager.LoadScene(0);
+       SceneController.GoToScene(0);
     }
 }

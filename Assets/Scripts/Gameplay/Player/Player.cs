@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         
-        float fallDuration = 0.3f;
+        float fallDuration = 0.2f;
         while (true)
         {
             Vector3 pos = transform.position;

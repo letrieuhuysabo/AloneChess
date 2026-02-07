@@ -42,9 +42,9 @@ public class CanMoveEffectPooling : MonoBehaviour
     {
         Destroy(effect);
         return;
-        effect.SetActive(false);
-        effect.transform.SetParent(transform,false);
-        pool.Enqueue(effect);
+        // effect.SetActive(false);
+        // effect.transform.SetParent(transform,false);
+        // pool.Enqueue(effect);
     }
     public void ReturnObj(GameObject effect, float delay)
     {
