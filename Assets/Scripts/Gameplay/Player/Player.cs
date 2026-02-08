@@ -1,28 +1,50 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public static Player instance;
     Animator anim;
-    bool falling;
+    bool falling, dead;
+    Coroutine fallCoroutine;
+    Vector3 beforePos;
     
     public Animator Anim { get => GetComponentInChildren<Animator>(); set => anim = value; }
     public bool Falling { get => falling; set => falling = value; }
+    public Vector3 BeforePos { get => beforePos; set => beforePos = value; }
+    public bool Dead { get => dead; set => dead = value; }
+    [SerializeField] GameObject explosionVfxPrefab;
 
     void Awake()
     {
         instance = this;
         falling = false;
+        dead = false;
     }
     void Start()
     {
-        // Fall();
+        CheckCanFall();
+    }
+    async void CheckCanFall()
+    {
+        await Task.Yield();
+        // await Task.Delay(5000);
+        Vector3 bottomPos = transform.position + Vector3.down;
+        if (MapController.instance.IsEmpty(bottomPos))
+        {
+            Fall();
+        }
     }
     public void Fall(float delay = 0)
     {
-        falling = true;
-        StartCoroutine(FallCoroutine(delay));
+        
+        Vector3 bottomPos = transform.position + Vector3.down;
+        if (MapController.instance.IsEmpty(bottomPos))
+        {
+            falling = true;
+            fallCoroutine = StartCoroutine(FallCoroutine(delay));
+        }
     }
     IEnumerator FallCoroutine(float delay = 0)
     {
@@ -45,15 +67,38 @@ public class Player : MonoBehaviour
                     yield return null;
                 }
                 transform.position = target;
+                MyEventTrigger.instance.OnPlayerMove();
             }
             else
             {
                 SoundGameplayController.instance.PlayLandingSound();
+                MyEventTrigger.instance.OnPlayerFall();
                 break;
             }
         }
         falling = false;
-        ChessPiece.clicked = false;
+        
     }
-    
+    public void Move(Vector3 target)
+    {
+        transform.position = target;
+        MyEventTrigger.instance.OnPlayerMove();
+        Fall(0.25f);
+    }
+    public async void Respawn()
+    {
+        if (fallCoroutine != null)
+        {
+            StopCoroutine(fallCoroutine);
+        }
+        GameObject explosionVfx = Instantiate(explosionVfxPrefab);
+        explosionVfx.transform.position = transform.position;
+        Destroy(explosionVfx,3);
+        dead = true;
+        Anim.SetTrigger("Respawn");
+        await Task.Delay(1000);
+        transform.position = beforePos;
+        dead = false;
+        falling = false;
+    }
 }
