@@ -13,6 +13,10 @@ public class BlackKnight : ChessPiece
         ShowPos(currentPos + Vector3.left * 2 + Vector3.down);
         ShowPos(currentPos + Vector3.right * 2 + Vector3.up);
         ShowPos(currentPos + Vector3.right * 2 + Vector3.down);
+        if (posCanMoveQuantity == 0)
+        {
+            ShowCantMoveAnywhere();
+        }
     }
     
 }

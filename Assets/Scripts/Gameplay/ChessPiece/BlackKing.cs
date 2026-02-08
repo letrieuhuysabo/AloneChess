@@ -22,5 +22,9 @@ public class BlackKing : ChessPiece
         ShowPos(currentPos +Vector3.right + Vector3.down);
         // đi trái xuống
         ShowPos(currentPos +Vector3.left + Vector3.down);
+        if (posCanMoveQuantity == 0)
+        {
+            ShowCantMoveAnywhere();
+        }
     }
 }

@@ -12,7 +12,7 @@ public abstract class ChessPiece : MonoBehaviour
     }
     void OnMouseDown()
     {
-        if (Player.instance.Falling || CompleteGameController.completed)
+        if (Player.instance.Falling || Player.instance.Dead || CompleteGameController.completed)
         {
             return;
         }

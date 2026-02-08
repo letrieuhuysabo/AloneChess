@@ -3,7 +3,7 @@ using UnityEngine;
 public class SoundGameplayController : MonoBehaviour
 {
     AudioSource audioSource;
-    [SerializeField] AudioClip moveSound, landingSound, cantMoveSound;
+    [SerializeField] AudioClip moveSound, landingSound, cantMoveSound, attackedSound;
     [SerializeField] AudioClip gainStarSound;
     [SerializeField] AudioClip reachPortalSound;
     [SerializeField] AudioClip switchPieceSound;
@@ -29,6 +29,10 @@ public class SoundGameplayController : MonoBehaviour
     public void PlayCantMoveSound()
     {
         audioSource.PlayOneShot(cantMoveSound);
+    }
+    public void PlayAttackedSound()
+    {
+        audioSource.PlayOneShot(attackedSound);
     }
     public void PlayGainStarSound()
     {

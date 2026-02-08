@@ -13,5 +13,9 @@ public class BlackPawn : ChessPiece
         // ShowPoses(currentPos, Vector3.up);
         // // đi xuống dưới
         // ShowPoses(currentPos, Vector3.down);
+        if (posCanMoveQuantity == 0)
+        {
+            ShowCantMoveAnywhere();
+        }
     }
 }

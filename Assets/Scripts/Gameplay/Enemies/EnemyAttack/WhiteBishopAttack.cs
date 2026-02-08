@@ -1,0 +1,16 @@
+using UnityEngine;
+
+public class WhiteBishopAttack : EnemyAttack
+{
+    protected override void CalculateControlledPoses()
+    {
+        controledPoses.Add(Configs.ConvertVectorToInt(transform.position));
+        
+        Vector3 currentPos = transform.position;
+
+        GetPoses(currentPos,Vector3.up + Vector3.right);
+        GetPoses(currentPos,Vector3.up + Vector3.left);
+        GetPoses(currentPos,Vector3.down + Vector3.right);
+        GetPoses(currentPos,Vector3.down + Vector3.left);
+    }
+}
