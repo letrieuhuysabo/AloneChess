@@ -16,6 +16,7 @@ public class CompleteGameController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         SoundGameplayController.instance.PlayShowCompletePanelSound();
+        Destroy(Player.instance.gameObject);
         StartCoroutine(ShowCollectedStarsCoroutine());
     }
     IEnumerator ShowCollectedStarsCoroutine()

@@ -71,8 +71,22 @@ public class Player : MonoBehaviour
             }
             else
             {
-                SoundGameplayController.instance.PlayLandingSound();
-                MyEventTrigger.instance.OnPlayerFall();
+                bool flag = true;
+                EnemyAttack []enemyAttacks = FindObjectsByType<EnemyAttack>(FindObjectsSortMode.None);
+                foreach (EnemyAttack enemyAttack in enemyAttacks)
+                {
+                    if (enemyAttack.LandingPos == Configs.ConvertVectorToInt(target))
+                    {
+                        Respawn();
+                        flag = false;
+                    }
+                }
+                if (flag)
+                {
+                    SoundGameplayController.instance.PlayLandingSound();
+                    MyEventTrigger.instance.OnPlayerFall();
+                }
+                
                 break;
             }
         }
@@ -91,6 +105,7 @@ public class Player : MonoBehaviour
         {
             StopCoroutine(fallCoroutine);
         }
+        SoundGameplayController.instance.PlayAttackedSound();
         GameObject explosionVfx = Instantiate(explosionVfxPrefab);
         explosionVfx.transform.position = transform.position;
         Destroy(explosionVfx,3);

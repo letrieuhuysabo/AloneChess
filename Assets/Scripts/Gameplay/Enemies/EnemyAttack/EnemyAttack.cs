@@ -6,6 +6,10 @@ using UnityEngine;
 public abstract class EnemyAttack : MonoBehaviour
 {
     protected HashSet<Vector2Int> controledPoses;
+    protected Vector2Int landingPos;
+
+    public Vector2Int LandingPos { get => landingPos; set => landingPos = value; }
+
     void Awake()
     {
         controledPoses = new();
@@ -39,7 +43,7 @@ public abstract class EnemyAttack : MonoBehaviour
     IEnumerator AttackCoroutine(Vector3 startPos, Vector3 targetPos)
     {
         float duration = 0f;
-        SoundGameplayController.instance.PlayAttackedSound();
+        
         while (duration < 0.05f)
         {
             transform.position = Vector3.Lerp(startPos,targetPos,duration/0.05f);

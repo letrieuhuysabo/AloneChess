@@ -4,7 +4,7 @@ public class WhiteQueenAttack : EnemyAttack
 {
     protected override void CalculateControlledPoses()
     {
-        controledPoses.Add(Configs.ConvertVectorToInt(transform.position));
+        landingPos = Configs.ConvertVectorToInt(transform.position);
         
         Vector3 currentPos = transform.position;
 
