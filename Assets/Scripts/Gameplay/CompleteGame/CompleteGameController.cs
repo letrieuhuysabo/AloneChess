@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,24 @@ public class CompleteGameController : MonoBehaviour
         SoundGameplayController.instance.PlayShowCompletePanelSound();
         Destroy(Player.instance.gameObject);
         StartCoroutine(ShowCollectedStarsCoroutine());
+        TextMeshProUGUI description = transform.Find("Panel").Find("Description").GetComponent<TextMeshProUGUI>();
+        int starCollected = StarCollector.instance.StarCollected;
+        if (starCollected == 0)
+        {
+            description.text = "Good job";
+        }
+        else if (starCollected == 1)
+        {
+            description.text = "Great !";
+        }
+        else if (starCollected == 2)
+        {
+           description.text = "Excellent !!"; 
+        }
+        else
+        {
+            description.text = "Perfect !!!";
+        }
     }
     IEnumerator ShowCollectedStarsCoroutine()
     {

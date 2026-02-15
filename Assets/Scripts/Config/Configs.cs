@@ -4,7 +4,7 @@ using UnityEngine;
 public static class Configs
 {
     public static int currentLevel = 1;
-    public static int levelQuantity = 5;
+    public static int levelQuantity = 6;
     public static bool FloatEqual(float a, float b)
     {
         return Mathf.Abs(a-b) < 0.001f;

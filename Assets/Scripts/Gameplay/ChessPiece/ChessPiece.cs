@@ -87,8 +87,8 @@ public abstract class ChessPiece : MonoBehaviour
         }
         if (collision.CompareTag("Star"))
         {
-            Destroy(collision.gameObject);
-            StarCollector.instance.CollectStar();
+            collision.gameObject.SetActive(false);
+            StarCollector.instance.CollectStar(collision.gameObject);
             StarCollector.instance.SpawnGainStarVfx(collision.gameObject.transform.position);
         }
     }

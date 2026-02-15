@@ -109,6 +109,7 @@ public class Player : MonoBehaviour
         GameObject explosionVfx = Instantiate(explosionVfxPrefab);
         explosionVfx.transform.position = transform.position;
         Destroy(explosionVfx,3);
+        MyEventTrigger.instance.OnPlayerDead();
         dead = true;
         Anim.SetTrigger("Respawn");
         await Task.Delay(1000);
