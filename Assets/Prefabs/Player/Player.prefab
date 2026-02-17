@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3129893436956417481}
   - component: {fileID: 8563560841794185320}
   - component: {fileID: -535426592375778924}
+  - component: {fileID: 3899672900003820467}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -100,3 +101,17 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_SortAtRoot: 0
+--- !u!114 &3899672900003820467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155647398020954514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee085d4110d03a43b1f45f39a614f9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttacktion
+  gainAttacktionVfxPrefab: {fileID: 4390562589494507436, guid: c0a46377f3834b546bc38ebffd36cd22, type: 3}
+  slashVfxPrefab: {fileID: 8230405067788800410, guid: d3834e1c3fd11eb468e3d8b5c42eadf4, type: 3}

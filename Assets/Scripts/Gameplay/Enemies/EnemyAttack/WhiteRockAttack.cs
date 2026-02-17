@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WhiteRockAttack : EnemyAttack
 {
-    protected override void CalculateControlledPoses()
+    public override void CalculateControlledPoses()
     {
         landingPos = Configs.ConvertVectorToInt(transform.position);
         Vector3 currentPos = transform.position;

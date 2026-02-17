@@ -1,5 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class ChessPiece : MonoBehaviour
@@ -7,8 +7,12 @@ public abstract class ChessPiece : MonoBehaviour
     public static bool clicked;
     protected int posCanMoveQuantity;
     Coroutine showCantMoveAnywhereCoroutine;
-    private void Start() {
+
+    private void Start()
+    {
         posCanMoveQuantity = 0;
+
+
     }
     void OnMouseDown()
     {
@@ -27,11 +31,11 @@ public abstract class ChessPiece : MonoBehaviour
             posCanMoveQuantity = 0;
             ShowPosesCanMove();
         }
-        
+
     }
-    
+
     public abstract void ShowPosesCanMove();
-    // hàm này dùng cho vua, mã, tốt
+    // hàm này dùng cho vua, mã
     public void ShowPos(Vector3 targetPos)
     {
         if (MapController.instance.IsEmpty(targetPos))
@@ -39,6 +43,23 @@ public abstract class ChessPiece : MonoBehaviour
             ShowPosCanMove.instance.ShowThisPos(targetPos);
             posCanMoveQuantity++;
             // Debug.Log("spawned at " + targetPos);
+        }
+        else
+        {
+            if (PlayerAttacktion.instance.HoldingAttacktion > 0)
+            {
+                EnemyAttack[] enemyAttacks = FindObjectsByType<EnemyAttack>(FindObjectsSortMode.None);
+                foreach (EnemyAttack enemyAttack in enemyAttacks)
+                {
+                    if (enemyAttack.LandingPos == Configs.ConvertVectorToInt(targetPos))
+                    {
+                        ShowPosCanMove.instance.ShowThisAttackPos(targetPos);
+                        posCanMoveQuantity++;
+                        break;
+                    }
+                }
+            }
+
         }
     }
     // hàm này dùng cho hậu, tượng, xe
@@ -55,7 +76,20 @@ public abstract class ChessPiece : MonoBehaviour
             }
             else
             {
-                // Debug.Log(dir * distance);
+                if (PlayerAttacktion.instance.HoldingAttacktion > 0)
+                {
+                    EnemyAttack[] enemyAttacks = FindObjectsByType<EnemyAttack>(FindObjectsSortMode.None);
+                    foreach (EnemyAttack enemyAttack in enemyAttacks)
+                    {
+                        if (enemyAttack.LandingPos == Configs.ConvertVectorToInt(currentPos + dir * distance))
+                        {
+                            ShowPosCanMove.instance.ShowThisAttackPos(currentPos + dir * distance);
+                            posCanMoveQuantity++;
+                            break;
+                        }
+                    }
+                }
+
                 break;
             }
             distance++;
@@ -66,20 +100,21 @@ public abstract class ChessPiece : MonoBehaviour
     }
     // IEnumerator ShowPosesCoroutine(Vector3 currentPos, Vector3 dir)
     // {
-        
+
     // }
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("SwitchPiece"))
         {
+            Player.instance.TakenSwitch.Push(collision.gameObject);
             SwitchPiece switchPiece = collision.gameObject.GetComponent<SwitchPiece>();
             GameObject piece = Instantiate(switchPiece.PiecePrefab);
             piece.transform.SetParent(transform.parent, false);
             piece.transform.localPosition = Vector3.zero;
             SoundGameplayController.instance.PlaySwitchPieceSound();
-            SpawnSwitchPieceVfx(switchPiece.SwitchVfxPrefab,collision.transform.position);
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            SpawnSwitchPieceVfx(switchPiece.SwitchVfxPrefab, collision.transform.position);
+            collision.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
         if (collision.CompareTag("Portal"))
         {
@@ -91,12 +126,16 @@ public abstract class ChessPiece : MonoBehaviour
             StarCollector.instance.CollectStar(collision.gameObject);
             StarCollector.instance.SpawnGainStarVfx(collision.gameObject.transform.position);
         }
+        if (collision.CompareTag("Attacktion"))
+        {
+            PlayerAttacktion.instance.GainAttacktion(collision.gameObject);
+        }
     }
     void SpawnSwitchPieceVfx(GameObject switchVfxPrefab, Vector3 pos)
     {
         GameObject switchVfx = Instantiate(switchVfxPrefab);
         switchVfx.transform.position = pos;
-        Destroy(switchVfx,5);
+        Destroy(switchVfx, 5);
     }
     protected void ShowCantMoveAnywhere()
     {

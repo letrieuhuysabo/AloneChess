@@ -28,6 +28,10 @@ public abstract class EnemyAttack : MonoBehaviour
     }
     void CheckControlledPoses()
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            return;
+        }
         Vector2Int playerPos = Configs.ConvertVectorToInt(Player.instance.gameObject.transform.position);
         if (controledPoses.Contains(playerPos))
         {
@@ -56,7 +60,7 @@ public abstract class EnemyAttack : MonoBehaviour
         yield return new WaitForSeconds(1f);
         transform.position = startPos;
     }
-    protected abstract void CalculateControlledPoses();
+    public abstract void CalculateControlledPoses();
     protected void GetPoses(Vector3 currentPos, Vector3 dir)
     {
         int distance = 1;

@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,22 +11,72 @@ public class Player : MonoBehaviour
     bool falling, dead;
     Coroutine fallCoroutine;
     Vector3 beforePos;
-    
+
     public Animator Anim { get => GetComponentInChildren<Animator>(); set => anim = value; }
     public bool Falling { get => falling; set => falling = value; }
     public Vector3 BeforePos { get => beforePos; set => beforePos = value; }
     public bool Dead { get => dead; set => dead = value; }
+    public Stack<GameObject> TakenSwitch { get => takenSwitch; set => takenSwitch = value; }
+
+
     [SerializeField] GameObject explosionVfxPrefab;
+    Stack<GameObject> takenSwitch; // xử lý việc sau khi biến đổi thì lại chết
 
     void Awake()
     {
         instance = this;
         falling = false;
         dead = false;
+        takenSwitch = new();
     }
     void Start()
     {
         CheckCanFall();
+        // xử lý việc sau khi biến đổi thì lại chết
+        MyEventTrigger.instance.PlayerFallEventTriggers.Add(() =>
+        {
+            StartCoroutine(ClearTakenSwitchCoroutine());
+            StartCoroutine(UpdateCurrentPiece());
+        });
+        MyEventTrigger.instance.PlayerDeadEventTriggers.Add(() =>
+        {
+            while (takenSwitch.Count > 0)
+            {
+                GameObject switchPiece = takenSwitch.Pop();
+                switchPiece.SetActive(true);
+            }
+
+            StartCoroutine(UndoPieceCoroutine());
+        });
+    }
+    IEnumerator ClearTakenSwitchCoroutine()
+    {
+        // yield return new WaitForSeconds(1f);
+        yield return null;
+        takenSwitch.Clear();
+    }
+    IEnumerator UpdateCurrentPiece()
+    {
+        // yield return new WaitForSeconds(1f);
+        yield return null;
+        while (transform.childCount > 1)
+        {
+            Destroy(transform.GetChild(0).gameObject);
+            yield return null;
+            // Debug.Log(transform.childCount);
+        }
+        // Debug.Log("hello");
+    }
+    IEnumerator UndoPieceCoroutine()
+    {
+        while (transform.childCount > 1)
+        {
+            Destroy(transform.GetChild(1).gameObject);
+            yield return null;
+            // Debug.Log(transform.childCount);
+        }
+        yield return new WaitForSeconds(1f);
+        transform.GetChild(0).gameObject.SetActive(true);
     }
     async void CheckCanFall()
     {
@@ -38,18 +90,13 @@ public class Player : MonoBehaviour
     }
     public void Fall(float delay = 0)
     {
-        
-        Vector3 bottomPos = transform.position + Vector3.down;
-        if (MapController.instance.IsEmpty(bottomPos))
-        {
-            falling = true;
-            fallCoroutine = StartCoroutine(FallCoroutine(delay));
-        }
+        falling = true;
+        fallCoroutine = StartCoroutine(FallCoroutine(delay));
     }
     IEnumerator FallCoroutine(float delay = 0)
     {
         yield return new WaitForSeconds(delay);
-        
+
         float fallDuration = 0.2f;
         while (true)
         {
@@ -72,7 +119,7 @@ public class Player : MonoBehaviour
             else
             {
                 bool flag = true;
-                EnemyAttack []enemyAttacks = FindObjectsByType<EnemyAttack>(FindObjectsSortMode.None);
+                EnemyAttack[] enemyAttacks = FindObjectsByType<EnemyAttack>(FindObjectsSortMode.None);
                 foreach (EnemyAttack enemyAttack in enemyAttacks)
                 {
                     if (enemyAttack.LandingPos == Configs.ConvertVectorToInt(target))
@@ -84,14 +131,16 @@ public class Player : MonoBehaviour
                 if (flag)
                 {
                     SoundGameplayController.instance.PlayLandingSound();
+                    yield return new WaitForSeconds(0.2f);
                     MyEventTrigger.instance.OnPlayerFall();
                 }
-                
+
                 break;
             }
         }
+        // yield return new WaitForSeconds(1f);
         falling = false;
-        
+
     }
     public void Move(Vector3 target)
     {
@@ -108,7 +157,7 @@ public class Player : MonoBehaviour
         SoundGameplayController.instance.PlayAttackedSound();
         GameObject explosionVfx = Instantiate(explosionVfxPrefab);
         explosionVfx.transform.position = transform.position;
-        Destroy(explosionVfx,3);
+        Destroy(explosionVfx, 3);
         MyEventTrigger.instance.OnPlayerDead();
         dead = true;
         Anim.SetTrigger("Respawn");

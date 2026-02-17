@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ShowPosCanMove : MonoBehaviour
 {
-    List <GameObject> canMoveEffects;
+    List<GameObject> canMoveEffects;
     public static ShowPosCanMove instance;
     void Awake()
     {
@@ -14,8 +14,15 @@ public class ShowPosCanMove : MonoBehaviour
     {
         CanMoveEffectController.clicked = false;
         GameObject canMoveEffect = CanMoveEffectPooling.instance.TakeObj();
-        canMoveEffect.transform.position = new Vector3(pos.x,pos.y,-2);
+        canMoveEffect.transform.position = new Vector3(pos.x, pos.y, -2);
         canMoveEffects.Add(canMoveEffect);
+    }
+    public void ShowThisAttackPos(Vector3 pos)
+    {
+        CanMoveEffectController.clicked = false;
+        GameObject canAttackEffect = CanAttackEffectPooling.instance.TakeObj();
+        canAttackEffect.transform.position = new Vector3(pos.x, pos.y, -2);
+        canMoveEffects.Add(canAttackEffect);
     }
     public void ClearAllEffects()
     {

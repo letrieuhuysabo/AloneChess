@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WhitePawnAttack : EnemyAttack
 {
-    protected override void CalculateControlledPoses()
+    public override void CalculateControlledPoses()
     {
         landingPos = Configs.ConvertVectorToInt(transform.position);
         GetPos(transform.position + Vector3.up + Vector3.right);

@@ -12,6 +12,7 @@ public class MyEventTrigger : MonoBehaviour
     public List<Action> PlayerFallEventTriggers { get => playerFallEventTriggers; set => playerFallEventTriggers = value; }
     public List<Action> PlayerDeadEventTriggers { get => playerDeadEventTriggers; set => playerDeadEventTriggers = value; }
 
+
     void Awake()
     {
         instance = this;

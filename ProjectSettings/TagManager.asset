@@ -8,6 +8,7 @@ TagManager:
   - Map
   - SwitchPiece
   - Star
+  - Attacktion
   layers:
   - Default
   - TransparentFX

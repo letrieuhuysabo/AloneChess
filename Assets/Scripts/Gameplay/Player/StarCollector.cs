@@ -20,7 +20,7 @@ public class StarCollector : MonoBehaviour
         cacheStars = new();
         starText = GameObject.Find("Canvas").transform.Find("StarCollected").Find("Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
         starCollected = 0;
-        MyEventTrigger.instance.PlayerFallEventTriggers.Add(() => {cacheStars.Clear();});
+        MyEventTrigger.instance.PlayerFallEventTriggers.Add(() => {StartCoroutine(ClearCacheStarsCoroutine());});
         MyEventTrigger.instance.PlayerDeadEventTriggers.Add(() =>
         {
             while (cacheStars.Count > 0)
@@ -32,6 +32,12 @@ public class StarCollector : MonoBehaviour
             }
         });
         UpdateStarCollected();
+    }
+    IEnumerator ClearCacheStarsCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        cacheStars.Clear();
+        // Debug.Log(cacheStars.Count);
     }
     public void CollectStar(GameObject star)
     {

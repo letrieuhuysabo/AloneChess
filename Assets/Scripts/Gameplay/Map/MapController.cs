@@ -19,20 +19,27 @@ public class MapController : MonoBehaviour
     void Start()
     {
         // thêm các ô gạch
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            obstacles.Add(Configs.ConvertVectorToInt(transform.GetChild(i).position));
-        }
+
         Tilemap tilemap = transform.GetChild(0).gameObject.GetComponent<Tilemap>();
-        BoundsInt bounds = tilemap.cellBounds;
-        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        if (tilemap != null)
         {
-            if (tilemap.HasTile(pos))
+            BoundsInt bounds = tilemap.cellBounds;
+            foreach (Vector3Int pos in bounds.allPositionsWithin)
             {
-                // pos chính là tọa độ ô gạch (Vector3Int)
-                // Bạn có thể lưu pos vào List hoặc Dictionary để xử lý logic
-                obstacles.Add(Configs.ConvertVectorToInt(new Vector3(pos.x+1f, pos.y+1f,0)));
-                // Debug.Log(pos);
+                if (tilemap.HasTile(pos))
+                {
+                    // pos chính là tọa độ ô gạch (Vector3Int)
+                    // Bạn có thể lưu pos vào List hoặc Dictionary để xử lý logic
+                    obstacles.Add(Configs.ConvertVectorToInt(new Vector3(pos.x + 1f, pos.y + 1f, 0)));
+                    // Debug.Log(pos);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                obstacles.Add(Configs.ConvertVectorToInt(transform.GetChild(i).position));
             }
         }
         enemyAttacks = FindObjectsByType<EnemyAttack>(FindObjectsSortMode.None);
@@ -43,12 +50,17 @@ public class MapController : MonoBehaviour
         Vector2Int convertedPos = Configs.ConvertVectorToInt(pos);
         foreach (EnemyAttack enemyAttack in enemyAttacks)
         {
+            if (!enemyAttack.gameObject.activeInHierarchy)
+            {
+                continue;
+            }
             if (Configs.ConvertVectorToInt(enemyAttack.gameObject.transform.position) == convertedPos)
             {
                 return false;
             }
         }
-
+        // Debug.Log(convertedPos);
+        // Debug.Log(!obstacles.Contains(convertedPos));
         return !obstacles.Contains(convertedPos);
     }
 }

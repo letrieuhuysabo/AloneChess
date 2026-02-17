@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WhiteBishopAttack : EnemyAttack
 {
-    protected override void CalculateControlledPoses()
+    public override void CalculateControlledPoses()
     {
         landingPos = Configs.ConvertVectorToInt(transform.position);
         

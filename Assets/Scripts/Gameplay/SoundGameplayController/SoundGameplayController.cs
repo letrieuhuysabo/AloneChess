@@ -8,6 +8,7 @@ public class SoundGameplayController : MonoBehaviour
     [SerializeField] AudioClip reachPortalSound;
     [SerializeField] AudioClip switchPieceSound;
     [SerializeField] AudioClip showCompletePanelSound, showStar1Sound, showStar2Sound, showStar3Sound;
+    [SerializeField] AudioClip gainAtatcktionSound, attackSound;
     public static SoundGameplayController instance;
 
     public AudioSource AudioSource { get => audioSource; set => audioSource = value; }
@@ -57,6 +58,14 @@ public class SoundGameplayController : MonoBehaviour
     public void PlayShowStar3Sound()
     {
         audioSource.PlayOneShot(showStar3Sound);
+    }
+    public void PlayGainAttacktionSound()
+    {
+        audioSource.PlayOneShot(gainAtatcktionSound);    
+    }
+    public void PlayAttackSound()
+    {
+        audioSource.PlayOneShot(attackSound);
     }
 
 }

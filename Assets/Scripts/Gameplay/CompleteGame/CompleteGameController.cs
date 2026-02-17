@@ -37,6 +37,8 @@ public class CompleteGameController : MonoBehaviour
         {
             description.text = "Perfect !!!";
         }
+        TextMeshProUGUI levelText = transform.Find("Panel").Find("Level").GetComponent<TextMeshProUGUI>();
+        levelText.text = "Level " + (SceneManager.GetActiveScene().buildIndex - 1);
     }
     IEnumerator ShowCollectedStarsCoroutine()
     {

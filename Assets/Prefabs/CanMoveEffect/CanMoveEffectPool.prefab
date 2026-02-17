@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7096081619390383222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3253086915115665369}
+  - component: {fileID: 9115067861578748064}
+  - component: {fileID: 3428280721034540802}
+  m_Layer: 0
+  m_Name: CanMoveEffectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3253086915115665369
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096081619390383222}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.93383, y: -2.44031, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9115067861578748064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096081619390383222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fdd7cce64f297f448dd63685a2e77c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CanMoveEffectPooling
+  numberSpawnedAtStartGame: 50
+  canMoveEffectPrefab: {fileID: 3599690589869084123, guid: c60699ce39d68e24389e3a9a1b34e326, type: 3}
+--- !u!114 &3428280721034540802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096081619390383222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd42d421c362c3347a3091ca94e4f404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CanAttackEffectPooling
+  numberSpawnedAtStartGame: 10
+  canMoveEffectPrefab: {fileID: 3599690589869084123, guid: 8171168554f78e945a109ca95f843e45, type: 3}
