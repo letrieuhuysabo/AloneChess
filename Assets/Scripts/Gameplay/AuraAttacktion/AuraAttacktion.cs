@@ -7,8 +7,13 @@ public class AuraAttacktion : MonoBehaviour
     {
         instance = this;
     }
-    private void Update() {
-        transform.position = Player.instance.gameObject.transform.position;
+    private void Update()
+    {
+        if (Player.instance != null)
+        {
+            transform.position = Player.instance.gameObject.transform.position;
+        }
+
     }
     public void ShowAura(bool isShow)
     {
