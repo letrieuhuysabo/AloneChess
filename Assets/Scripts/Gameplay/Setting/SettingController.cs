@@ -34,17 +34,17 @@ public class SettingController : MonoBehaviour
     }
     public void SoundBtnOnclick()
     {
-        Debug.Log(SoundVolume.saveVolume);
+        // Debug.Log(SoundVolume.saveVolume);
         if (soundVolumeSlider.value > 0)
         {
             SoundVolume.saveVolume = soundVolumeSlider.value;
             SoundVolume.currentVolume = 0;
             soundVolumeSlider.value = 0;
-            
+
         }
         else
         {
-            Debug.Log("hello");
+            // Debug.Log("hello");
             SoundVolume.saveVolume = soundVolumeSlider.value;
             SoundVolume.currentVolume = SoundVolume.saveVolume;
             soundVolumeSlider.value = SoundVolume.saveVolume;
@@ -52,7 +52,8 @@ public class SettingController : MonoBehaviour
     }
     public void SoundVolumeControlelrOnchanged()
     {
-        SoundGameplayController.instance.AudioSource.volume = soundVolumeSlider.value;
+        if (SoundGameplayController.instance != null)
+            SoundGameplayController.instance.AudioSource.volume = soundVolumeSlider.value;
         SoundController.instance.AudioSource.volume = soundVolumeSlider.value;
         SoundVolume.currentVolume = soundVolumeSlider.value;
         if (soundVolumeSlider.value == 0)

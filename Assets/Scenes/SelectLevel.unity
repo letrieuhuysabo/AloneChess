@@ -551,7 +551,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0.028793924, w: 0.9995854}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 705354108}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 3.3}
@@ -869,10 +869,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 28671974}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 57.899994, y: -45.899994}
-  m_SizeDelta: {x: 70, y: 70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 30, y: 30}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &396950457
 MonoBehaviour:
@@ -1195,6 +1195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 506154071}
   - component: {fileID: 506154072}
+  - component: {fileID: 506154073}
   m_Layer: 0
   m_Name: SettingController
   m_TagString: Untagged
@@ -1239,6 +1240,28 @@ MonoBehaviour:
   soundImage: {fileID: 386083197}
   soundOn: {fileID: -1381648269, guid: 4ae2ccf01a85b364da21386682eb8574, type: 3}
   soundOff: {fileID: 1184342091, guid: 4ae2ccf01a85b364da21386682eb8574, type: 3}
+--- !u!95 &506154073
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506154070}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 75ebd420f790dc543b71bd2bcbb66c8c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &507113216
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,7 +1298,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -8.225861, y: 4.3330383}
+  m_AnchoredPosition: {x: 30, y: -30}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &507113218
@@ -1344,7 +1367,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 506154072}
         m_TargetAssemblyTypeName: SettingController, Assembly-CSharp
         m_MethodName: OpenSetting
         m_Mode: 1
@@ -1841,7 +1864,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: -0.22239941, w: 0.9749557}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 705354108}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25.7}
@@ -2737,7 +2760,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 99490507}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
