@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,12 +14,17 @@ public class StarCollector : MonoBehaviour
     Stack <GameObject> cacheStars;
 
     public int StarCollected { get => starCollected; set => starCollected = value; }
+    public TextMeshProUGUI StarText { get => starText; set => starText = value; }
 
     void Start()
     {
         instance = this;
         cacheStars = new();
-        starText = GameObject.Find("Canvas").transform.Find("StarCollected").Find("Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+        try
+        {
+            starText = GameObject.Find("Canvas").transform.Find("StarCollected").Find("Text (TMP)").gameObject.GetComponent<TextMeshProUGUI>();
+        }
+        catch(NullReferenceException){}
         starCollected = 0;
         MyEventTrigger.instance.PlayerFallEventTriggers.Add(() => {StartCoroutine(ClearCacheStarsCoroutine());});
         MyEventTrigger.instance.PlayerDeadEventTriggers.Add(() =>

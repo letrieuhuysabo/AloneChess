@@ -16,8 +16,9 @@ public class CompleteGameController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        // ChessPiece
         SoundGameplayController.instance.PlayShowCompletePanelSound();
-        Destroy(Player.instance.gameObject);
+        // Destroy(Player.instance.gameObject);
         StartCoroutine(ShowCollectedStarsCoroutine());
         TextMeshProUGUI description = transform.Find("Panel").Find("Description").GetComponent<TextMeshProUGUI>();
         int starCollected = StarCollector.instance.StarCollected;

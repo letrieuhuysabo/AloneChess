@@ -118,6 +118,7 @@ public abstract class ChessPiece : MonoBehaviour
         }
         if (collision.CompareTag("Portal"))
         {
+            
             Portal.instance.CompleteLevel();
         }
         if (collision.CompareTag("Star"))
