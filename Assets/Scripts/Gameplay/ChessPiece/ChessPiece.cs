@@ -7,6 +7,7 @@ public abstract class ChessPiece : MonoBehaviour
     public static bool clicked;
     protected int posCanMoveQuantity;
     Coroutine showCantMoveAnywhereCoroutine;
+    Coroutine highlightResetCoroutine;
 
     private void Start()
     {
@@ -118,7 +119,7 @@ public abstract class ChessPiece : MonoBehaviour
         }
         if (collision.CompareTag("Portal"))
         {
-            
+
             Portal.instance.CompleteLevel();
         }
         if (collision.CompareTag("Star"))
@@ -145,6 +146,10 @@ public abstract class ChessPiece : MonoBehaviour
             StopCoroutine(showCantMoveAnywhereCoroutine);
         }
         showCantMoveAnywhereCoroutine = StartCoroutine(ShowCantMoveAnywhereCoroutine());
+        if (highlightResetCoroutine == null)
+        {
+            highlightResetCoroutine = StartCoroutine(HighLightResetGameCoroutine());
+        }
     }
     IEnumerator ShowCantMoveAnywhereCoroutine()
     {
@@ -159,5 +164,36 @@ public abstract class ChessPiece : MonoBehaviour
             yield return new WaitForSeconds(duration);
         }
         clicked = false;
+    }
+    IEnumerator HighLightResetGameCoroutine()
+    {
+        Transform settingButton = GameObject.Find("Canvas").transform.Find("SettingButton");
+        settingButton.gameObject.GetComponent<Animator>().enabled = false;
+        Transform resetButton = GameObject.Find("Canvas").transform.Find("SettingController").Find("Panel").Find("Replay");
+        bool scaleUp = true;
+        float scaleSpeed = 1;
+        while (true)
+        {
+            Debug.Log("hello");
+            if (scaleUp)
+            {
+                settingButton.localScale += new Vector3(1f, 1f, 0) * scaleSpeed * Time.deltaTime;
+                resetButton.localScale += new Vector3(1f, 1f, 0) * scaleSpeed * Time.deltaTime;
+                if (resetButton.localScale.x > 1.2f)
+                {
+                    scaleUp = false;
+                }
+            }
+            else
+            {
+                settingButton.localScale -= new Vector3(1f, 1f, 0) * scaleSpeed * Time.deltaTime;
+                resetButton.localScale -= new Vector3(1f, 1f, 0) * scaleSpeed * Time.deltaTime;
+                if (resetButton.localScale.x < 0.8f)
+                {
+                    scaleUp = true;
+                }
+            }
+            yield return null;
+        }
     }
 }
