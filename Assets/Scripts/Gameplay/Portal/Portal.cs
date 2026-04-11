@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
@@ -7,11 +8,17 @@ public class Portal : MonoBehaviour
     void Awake()
     {
         instance = this;
-
+        CompleteGameController.completed = false;
     }
     public void CompleteLevel()
     {
-        Configs.currentLevel++;
+        SaveSystem.Singleton.Save("StarOfLevel" + Configs.currentLevel, StarCollector.instance.StarCollected + "");
+        if (Configs.currentLevel < SceneManager.GetActiveScene().buildIndex)
+        {
+            Configs.currentLevel = SceneManager.GetActiveScene().buildIndex;
+            SaveSystem.Singleton.UpdateCurrentLevelFromConfigs();
+        }
+
 
         OpenCompletePanel();
         CompleteGameController.completed = true;

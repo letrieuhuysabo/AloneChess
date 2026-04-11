@@ -9,19 +9,24 @@ public class CompleteGameController : MonoBehaviour
     public static bool completed;
     Animator anim;
 
-    void Awake()
-    {
-        completed = false;
-    }
     void Start()
     {
+        Destroy(Player.instance.gameObject);
+        int starCollected = StarCollector.instance.StarCollected;
+        int currentLevel = SceneManager.GetActiveScene().buildIndex - 1;
+        // save stars
+        string dataStar = SaveSystem.Singleton.Load("StarLevel" + currentLevel);
+        if (dataStar == null || int.Parse(dataStar) < starCollected)
+        {
+            SaveSystem.Singleton.Save("StarLevel" + currentLevel,starCollected + "");
+        }
         anim = GetComponent<Animator>();
-        // ChessPiece
+        
         SoundGameplayController.instance.PlayShowCompletePanelSound();
-        // Destroy(Player.instance.gameObject);
+        
         StartCoroutine(ShowCollectedStarsCoroutine());
         TextMeshProUGUI description = transform.Find("Panel").Find("Description").GetComponent<TextMeshProUGUI>();
-        int starCollected = StarCollector.instance.StarCollected;
+        
         if (starCollected == 0)
         {
             description.text = "Good job";
@@ -38,8 +43,10 @@ public class CompleteGameController : MonoBehaviour
         {
             description.text = "Perfect !!!";
         }
+        
         TextMeshProUGUI levelText = transform.Find("Panel").Find("Level").GetComponent<TextMeshProUGUI>();
-        levelText.text = "Level " + (SceneManager.GetActiveScene().buildIndex - 1);
+        levelText.text = "Level " + currentLevel;
+        
     }
     IEnumerator ShowCollectedStarsCoroutine()
     {

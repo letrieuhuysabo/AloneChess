@@ -16358,9 +16358,17 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1827446611}
+    - target: {fileID: 5842276626227040861, guid: 77edde0c6c27ad743819de53f48f3aad, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 6144235272857114125, guid: 77edde0c6c27ad743819de53f48f3aad, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342427915032930702, guid: 77edde0c6c27ad743819de53f48f3aad, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 70
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
